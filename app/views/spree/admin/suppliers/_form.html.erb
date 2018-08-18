@@ -1,0 +1,11 @@
+<%= form_for [:admin, spree_supplier] do |form| %>
+  <div data-hook="admin_inside_supplier_form" class="form-group">
+    <%= form.field_container :name, class: ['form-group'] do %>
+      <%= form.label :name, Spree.t(:name) %> <span class="required">*</span>
+      <%= error_message_on :supplier, :name, :class => 'error-message' %>
+      <%= text_field :supplier, :name, :class => 'form-control' %>
+    <% end %>
+  </div>
+
+  <%= render 'spree/admin/shared/edit_resource_links' %>
+<% end %>
