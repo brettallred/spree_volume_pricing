@@ -1,15 +1,20 @@
 <tr class="volume_price fields">
   <td>
-    <%= error_message_on(f.object, :name) %>
-    <%= f.text_field :name, size: 10, class: 'form-control' %>
+    <%= error_message_on(f.object, :supplier_id) %>
+    <%= f.collection_select(:supplier_id, Spree::Supplier.all, :id, :name, { include_blank: Spree.t('match_choices.none') }, { class: 'select2' }) %>
+  </td>
+  <td>
+    <%= error_message_on(f.object, :user_id) %>
+    <%= f.collection_select(:user_id, Spree::User.all, :id, :email, { include_blank: Spree.t('match_choices.none') }, { class: 'select2' }) %>
   </td>
   <td>
     <%= error_message_on(f.object, :discount_type) %>
     <%= f.select :discount_type, [
+        ["#{Spree.t(:none)}", 'none'],
         ["#{Spree.t(:total_price)}", 'price'],
         ["#{Spree.t(:percent_discount)}", 'percent'],
         ["#{Spree.t(:price_discount)}", 'dollar']
-      ], { inlcude_blank: true }, class: 'select2' %>
+      ], { include_blank: true }, class: 'select2' %>
   </td>
   <td>
     <%= error_message_on(f.object, :range) %>

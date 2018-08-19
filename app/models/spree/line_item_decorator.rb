@@ -1,4 +1,6 @@
 Spree::LineItem.class_eval do
+  belongs_to :volume_price, class_name: 'Spree::VolumePrice'
+  
   # pattern grabbed from: http://stackoverflow.com/questions/4470108/
 
   # the idea here is compatibility with spree_sale_products
@@ -12,12 +14,16 @@ Spree::LineItem.class_eval do
     return unless variant
 
     if changed? && changes.keys.include?('quantity')
-      vprice = variant.volume_price(quantity, order.user)
-      if price.present? && vprice <= variant.price
-        self.price = vprice and return
+      if volume_price.present?
+        self.price = volume_price.calculated_price 
+        return
       end
     end
 
     self.price = variant.price if price.nil?
+  end
+
+  def update_price
+    self.price = volume_price.calculated_price 
   end
 end

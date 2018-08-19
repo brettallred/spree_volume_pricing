@@ -3,6 +3,7 @@ class Spree::VolumePrice < ActiveRecord::Base
     belongs_to :variant, touch: true, optional: true
     belongs_to :volume_price_model, touch: true, optional: true
     belongs_to :spree_role, class_name: 'Spree::Role', foreign_key: 'role_id', optional: true
+    belongs_to :supplier, touch: true, optional: true
   else
     belongs_to :variant, touch: true
     belongs_to :volume_price_model, touch: true
@@ -33,6 +34,19 @@ class Spree::VolumePrice < ActiveRecord::Base
     else
       range.to_range === quantity
     end
+  end
+
+  def calculated_price
+    @calculated_price ||= begin
+                        case discount_type
+                        when 'price'
+                          return amount
+                        when 'dollar'
+                          return variant.price - amount
+                        when 'percent'
+                          return variant.price * (1 - amount)
+                        end
+                      end
   end
 
   # indicates whether or not the range is a true Ruby range or an open ended range with no upper bound

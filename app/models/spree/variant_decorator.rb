@@ -7,6 +7,10 @@ Spree::Variant.class_eval do
       volume_price[:amount].blank? && volume_price[:range].blank?
     }
 
+  def user_prices(user) 
+    volume_prices.where(user_id: [nil, user.id])
+  end
+
   def join_volume_prices(user = nil)
     table = Spree::VolumePrice.arel_table
 
