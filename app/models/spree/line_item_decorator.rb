@@ -23,7 +23,13 @@ Spree::LineItem.class_eval do
     self.price = variant.price if price.nil?
   end
 
-  def update_price
-    self.price = volume_price.calculated_price 
+  # Used this pattern for backward compatibility
+  old_update_price = instance_method(:update_price)
+  define_method(:update_price) do
+    if volume_price.nil?
+      old_update_price.bind(self).call
+    else
+      self.price = volume_price.calculated_price 
+    end
   end
 end
