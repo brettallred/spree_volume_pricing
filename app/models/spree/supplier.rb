@@ -3,11 +3,19 @@ class Spree::Supplier < ActiveRecord::Base
   belongs_to :stock_location, dependent: :destroy
   validates :name, presence: true, uniqueness: true
 
-  after_initialize :create_supplier
+  before_validation :create_supplier
+  before_save :ensure_stock_location_name_matches
 
   private
 
   def create_supplier
-    self.stock_location = Spree::StockLocation.new(name: name)
+    if stock_location.nil?
+      self.stock_location = Spree::StockLocation.new(name: name)
+    end
   end
+
+  def ensure_stock_location_name_matches
+    self.stock_location.name = self.name
+  end
+
 end
