@@ -5,6 +5,11 @@
       <%= error_message_on :supplier, :name, :class => 'error-message' %>
       <%= text_field :supplier, :name, :class => 'form-control' %>
     <% end %>
+    <%= form.field_container :logo, class: ['form-group'] do %>
+      <%= form.label :logo, Spree.t(:logo) %> <span class="required">*</span>
+      <%= error_message_on :supplier, :logo, :class => 'error-message' %>
+      <%= file_field :supplier, :logo, :class => 'form-control' %>
+    <% end %>    
   </div>
 
   <%= render 'spree/admin/shared/edit_resource_links' %>
