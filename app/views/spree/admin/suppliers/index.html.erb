@@ -19,8 +19,14 @@
   <tbody>
     <% @suppliers.each do |supplier| %>
       <tr id="<%= spree_dom_id supplier %>" data-hook="suppliers_row">
-        <td><%= image_tag supplier.logo.variant(resize_to_fit: [100, 100]) %></td>
         <td><%= supplier.name %></td>
+        <td>
+          <% if supplier.logo.attached? %>
+            <%= image_tag supplier.logo.variant(resize_to_fit: [100, 100]) %>
+          <% else %>
+            No logo yet
+          <% end %>
+        </td>        
         <td class="actions actions-2 text-right">
           <%= link_to_edit supplier.id, no_text: true %>
           <%= link_to_delete supplier, no_text: true %>
