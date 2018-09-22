@@ -1,4 +1,4 @@
-<%= form_for [:admin, spree_supplier] do |form| %>
+<%= form_for [:admin, spree_supplier], html: { multipart: true } do |form| %>
   <div data-hook="admin_inside_supplier_form" class="form-group">
     <%= form.field_container :name, class: ['form-group'] do %>
       <%= form.label :name, Spree.t(:name) %> <span class="required">*</span>
