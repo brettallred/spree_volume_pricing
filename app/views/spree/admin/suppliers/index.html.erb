@@ -22,7 +22,7 @@
         <td><%= supplier.name %></td>
         <td>
           <% if supplier.logo.attached? %>
-            <%= image_tag(Rails.application.routes.url_helpers.rails_blob_path(supplier.logo, only_path: true)) %>
+            <%= image_tag Rails.application.routes.url_helpers.rails_blob_path(supplier.logo, only_path: true), style: 'max-width: 300px; max-height: 40px;' %>
           <% else %>
             No logo yet
           <% end %>
