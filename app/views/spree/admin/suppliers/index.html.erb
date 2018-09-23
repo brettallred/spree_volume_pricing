@@ -21,8 +21,10 @@
       <tr id="<%= spree_dom_id supplier %>" data-hook="suppliers_row">
         <td><%= supplier.name %></td>
         <td>
-          <% if supplier.logo.attached? %>
-            <%= image_tag Rails.application.routes.url_helpers.rails_blob_path(supplier.logo, only_path: true), style: 'max-width: 300px; max-height: 40px;' %>
+          <% if supplier.logos.attached? %>
+            <% supplier.logos.each do |logo| %>
+              <%= image_tag Rails.application.routes.url_helpers.rails_blob_path(logo, only_path: true), style: 'max-width: 300px; max-height: 40px;' %>
+            <% end %>
           <% else %>
             No logo yet
           <% end %>

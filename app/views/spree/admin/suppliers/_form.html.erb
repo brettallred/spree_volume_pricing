@@ -5,10 +5,10 @@
       <%= error_message_on :supplier, :name, :class => 'error-message' %>
       <%= text_field :supplier, :name, :class => 'form-control' %>
     <% end %>
-    <%= form.field_container :logo, class: ['form-group'] do %>
-      <%= form.label :logo, Spree.t(:logo) %> <span class="required">*</span>
-      <%= error_message_on :supplier, :logo, :class => 'error-message' %>
-      <%= file_field :supplier, :logo, :class => 'form-control' %>
+    <%= form.field_container :logos, class: ['form-group'] do %>
+      <%= form.label :logos, Spree.t(:logos) %> <span class="required">*</span>
+      <%= error_message_on :supplier, :logos, :class => 'error-message' %>
+      <%= file_field :supplier, :logos,  multiple: true, :class => 'form-control' %>
     <% end %>    
   </div>
 

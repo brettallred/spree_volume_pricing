@@ -1,7 +1,7 @@
 class Spree::Supplier < ActiveRecord::Base
   has_many :volume_prices, -> { order(position: :asc) }, dependent: :destroy
   belongs_to :stock_location, dependent: :destroy
-  has_one_attached :logo
+  has_many_attached :logos
   validates :name, presence: true, uniqueness: true
 
   before_validation :create_stock_location
