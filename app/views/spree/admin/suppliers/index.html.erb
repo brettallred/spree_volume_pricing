@@ -10,7 +10,7 @@
 
 <table class="table sortable" id='listing_supplier_models' data-hook data-sortable-link="<%#= update_positions_admin_volume_price_models_url %>">
   <thead>
-    <tr data-hook="suppliers_header">      
+    <tr data-hook="suppliers_header">
       <th><%= Spree.t(:name) %></th>
       <th><%= Spree.t(:logo) %></th>
       <th class="actions"></th>
@@ -21,8 +21,8 @@
       <tr id="<%= spree_dom_id supplier %>" data-hook="suppliers_row">
         <td><%= supplier.name %></td>
         <td>
-          <% if supplier.logos.attached? %>
-            <%= image_tag Rails.application.routes.url_helpers.rails_blob_path(supplier.logos.first, only_path: true), style: 'max-width: 300px; max-height: 40px;' %>
+          <% if supplier.color_logo.attached? %>
+            <%= image_tag Rails.application.routes.url_helpers.rails_blob_path(supplier.color_logo, only_path: true), style: 'max-width: 300px; max-height: 40px;' %>
           <% else %>
             No logo yet
           <% end %>

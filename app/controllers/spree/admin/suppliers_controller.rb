@@ -1,6 +1,6 @@
 module Spree
   module Admin
-    class SuppliersController < ResourceController    
+    class SuppliersController < ResourceController
     end
   end
 end
