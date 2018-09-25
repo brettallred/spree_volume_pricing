@@ -1,10 +1,20 @@
-<%= form_for [:admin, spree_supplier] do |form| %>
+<%= form_for [:admin, spree_supplier], html: { multipart: true } do |form| %>
   <div data-hook="admin_inside_supplier_form" class="form-group">
     <%= form.field_container :name, class: ['form-group'] do %>
       <%= form.label :name, Spree.t(:name) %> <span class="required">*</span>
       <%= error_message_on :supplier, :name, :class => 'error-message' %>
       <%= text_field :supplier, :name, :class => 'form-control' %>
     <% end %>
+    <%= form.field_container :color_logo, class: ['form-group'] do %>
+      <%= form.label :color_logo, Spree.t(:color_logo) %> <span class="required">*</span>
+      <%= error_message_on :supplier, :color_logo, :class => 'error-message' %>
+      <%= file_field :supplier, :color_logo, :class => 'form-control' %>
+    <% end %>
+    <%= form.field_container :black_white_logo, class: ['form-group'] do %>
+      <%= form.label :black_white_logo, Spree.t(:black_and_white_logo) %> <span class="required">*</span>
+      <%= error_message_on :supplier, :black_white_logo, :class => 'error-message' %>
+      <%= file_field :supplier, :black_white_logo, :class => 'form-control' %>
+    <% end %>    
   </div>
 
   <%= render 'spree/admin/shared/edit_resource_links' %>

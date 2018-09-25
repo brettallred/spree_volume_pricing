@@ -12,6 +12,7 @@
   <thead>
     <tr data-hook="suppliers_header">
       <th><%= Spree.t(:name) %></th>
+      <th><%= Spree.t(:logo) %></th>
       <th class="actions"></th>
     </tr>
   </thead>
@@ -19,6 +20,13 @@
     <% @suppliers.each do |supplier| %>
       <tr id="<%= spree_dom_id supplier %>" data-hook="suppliers_row">
         <td><%= supplier.name %></td>
+        <td>
+          <% if supplier.color_logo.attached? %>
+            <%= image_tag Rails.application.routes.url_helpers.rails_blob_path(supplier.color_logo, only_path: true), style: 'max-width: 300px; max-height: 40px;' %>
+          <% else %>
+            No logo yet
+          <% end %>
+        </td>        
         <td class="actions actions-2 text-right">
           <%= link_to_edit supplier.id, no_text: true %>
           <%= link_to_delete supplier, no_text: true %>
