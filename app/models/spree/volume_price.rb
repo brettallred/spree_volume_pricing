@@ -5,6 +5,7 @@ class Spree::VolumePrice < ActiveRecord::Base
     belongs_to :spree_role, class_name: 'Spree::Role', foreign_key: 'role_id', optional: true
     belongs_to :supplier, touch: true, optional: true
     belongs_to :user, touch: true, optional: true
+    belongs_to :pricing_tier
   else
     belongs_to :variant, touch: true
     belongs_to :volume_price_model, touch: true
