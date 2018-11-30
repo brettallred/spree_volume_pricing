@@ -1,0 +1,30 @@
+<%= render 'spree/admin/shared/supplier_tabs', current: :pricing_tier %>
+<% content_for :page_title do %>
+  <%= Spree.t(:pricing_tiers) %> / <%= @pricing_tier.name %>
+<% end %>
+
+<div data-hook="admin_user_edit_general_settings" class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="panel-title">
+      <%= Spree.t(:general_details) %>
+    </h1>
+  </div>
+
+  <div class="panel-body">
+    <div data-hook="admin_user_edit_form">
+        <div data-hook="admin_user_edit_form_button">
+          <div class="row">
+            <div class="col-xs-12 col-md-6">
+              <div class="form-group">
+                <%= label :name, Spree.t(:name) %>
+                <%= @pricing_tier.name %>
+              </div>
+            </div>
+          </div>
+          <div class="form-actions" data-hook="buttons">
+            <%= button_link_to Spree.t('actions.back'), admin_supplier_pricing_tiers_path(@supplier) %>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>

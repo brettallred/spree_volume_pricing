@@ -4,9 +4,10 @@
     <%= f.collection_select(:supplier_id, Spree::Supplier.all, :id, :name, { include_blank: Spree.t('match_choices.none') }, { class: 'select2' }) %>
   </td>
   <td>
-    <%= error_message_on(f.object, :user_id) %>
-    <%= f.collection_select(:user_id, Spree::User.all, :id, :email, { include_blank: Spree.t('match_choices.none') }, { class: 'select2' }) %>
+    <%= error_message_on(f.object, :pricing_tier_id) %>
+    <%= f.collection_select(:pricing_tier_id, Spree::PricingTier.all, :id, :name, { include_blank: Spree.t('match_choices.none') }, { class: 'select2' }) %>
   </td>
+
   <td>
     <%= error_message_on(f.object, :discount_type) %>
     <%= f.select :discount_type, [

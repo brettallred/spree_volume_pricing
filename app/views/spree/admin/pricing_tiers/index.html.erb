@@ -1,0 +1,38 @@
+<%= render 'spree/admin/shared/supplier_tabs', current: :pricing_tier %>
+<% content_for :page_title do %>
+  <%= Spree.t(:pricing_tiers) %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <%= button_link_to 'New Pricing Tier', new_admin_supplier_pricing_tier_path(@supplier), class: "btn-success", icon: 'add', id: 'admin_new_pricing_tier_link' %>
+<% end %>
+
+<p id="notice"><%= notice %></p>
+
+<% if @pricing_tiers.any? %>
+  <table class="table sortable" id='listing_pricing_tier' data-hook="listing_pricing_tiers">
+    <thead>
+      <tr data-hook="pricing_tiers_header">
+        <th><%= Spree.t(:name) %></th>
+        <th class="actions"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @pricing_tiers.each do |pricing_tier| %>
+        <tr id="<%= spree_dom_id pricing_tier %>" data-hook="pricing_tiers_row">
+          <td><%= pricing_tier.name %></td>
+          <td class="actions actions-2 text-right">
+            <%= link_to_with_icon('edit', Spree.t(:edit),  edit_admin_supplier_pricing_tier_path(@supplier, pricing_tier), class: 'btn btn-primary btn-sm', no_text: true, data: { action: 'edit' })%>
+            <%= link_to_with_icon('show', Spree.t(:show), admin_supplier_pricing_tier_path(@supplier, pricing_tier), class: 'btn btn-primary btn-sm', no_text: true, data: { action: 'show' })%>
+            <%= link_to_with_icon('delete', Spree.t(:remove), admin_supplier_pricing_tier_path(@supplier, pricing_tier), method: :delete, class: 'icon_link btn btn-danger btn-sm', data: { action: :remove, confirm: Spree.t(:are_you_sure) }, no_text: true) %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="alert alert-info no-objects-found">
+    <%= Spree.t(:no_resource_found, resource: plural_resource_name(Spree::PricingTier)) %>,
+    <%= link_to Spree.t(:add_one), new_admin_supplier_pricing_tier_path(@supplier) if can?(:create, Spree::PricingTier) %>!
+  </div>
+<% end %>

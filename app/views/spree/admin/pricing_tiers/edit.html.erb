@@ -1,0 +1,33 @@
+<%= render 'spree/admin/shared/supplier_tabs', current: :pricing_tier %>
+
+<% content_for :page_title do %>
+  <%= @pricing_tier.name %>
+<% end %>
+
+<div data-hook="admin_user_edit_general_settings" class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="panel-title">
+      <%= Spree.t(:general_details) %>
+    </h1>
+  </div>
+
+  <div class="panel-body">
+    <div data-hook="admin_user_edit_form_header">
+      <%= render partial: 'spree/admin/shared/error_messages', locals: { target: @pricing_tier } %>
+    </div>
+
+    <div data-hook="admin_user_edit_form">
+      <%= form_for [:admin, @supplier, @pricing_tier], url: spree.admin_supplier_pricing_tier_path(@supplier, @pricing_tier), method: :put do |f| %>
+        <%= render partial: 'form', locals: { f: f } %>
+
+        <div data-hook="admin_user_edit_form_button">
+          <div class="form-actions" data-hook="buttons">
+            <%= button Spree.t('actions.update'), 'refresh', 'submit', {class: 'btn-success', data: { disable_with: "#{ Spree.t(:saving) }..." }} %>
+            <span class="or"><%= Spree.t(:or) %></span>
+            <%= button_link_to Spree.t('actions.cancel'), admin_supplier_pricing_tiers_path(@supplier), icon: 'delete' %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

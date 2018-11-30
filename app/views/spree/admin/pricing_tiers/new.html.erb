@@ -1,0 +1,23 @@
+<%= render 'spree/admin/shared/supplier_tabs', current: :pricing_tier %>
+
+<% content_for :page_title do %>
+  <%= Spree.t(:new_pricing_tier) %>
+<% end %>
+
+<div>
+  <%= render partial: 'spree/admin/shared/error_messages', locals: { target: @pricing_tier } %>
+</div>
+
+<div>
+  <%= form_for [:admin, @supplier, @pricing_tier], url: spree.admin_supplier_pricing_tiers_path(@supplier), method: :post do |f| %>
+    <%= render partial: 'form', locals: { f: f } %>
+
+    <div data-hook="admin_pricing_tier_new_form_buttons">
+     <div class="form-actions" data-hook="buttons">
+        <%= button Spree.t('actions.create'), 'ok', 'submit', {class: 'btn-success', data: { disable_with: "#{ Spree.t(:saving) }..." }} %>
+        <span class="or"><%= Spree.t(:or) %></span>
+        <%= button_link_to Spree.t('actions.cancel'), spree.admin_supplier_pricing_tiers_path(@supplier), icon: 'remove' %>
+      </div>
+    </div>
+  <% end %>
+</div>

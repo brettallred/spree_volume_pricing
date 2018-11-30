@@ -1,5 +1,2 @@
-<% content_for :page_title do %>
-  <%= Spree.t(:edit_supplier) %>
-<% end %>
-
+<%= render 'spree/admin/shared/supplier_tabs', current: :details %>
 <%= render 'form', spree_supplier: @supplier %>
