@@ -1,7 +1,7 @@
 <%= render 'spree/admin/shared/supplier_tabs', current: :pricing_tier %>
 
 <% content_for :page_title do %>
-  <%= @pricing_tier.name %>
+  <%= link_to 'Pricing tiers', spree.admin_supplier_pricing_tiers_path(@supplier) %> / <%= @pricing_tier.name %>
 <% end %>
 
 <div data-hook="admin_user_edit_general_settings" class="panel panel-default">

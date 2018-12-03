@@ -1,7 +1,7 @@
 <%= render 'spree/admin/shared/supplier_tabs', current: :pricing_tier %>
 
 <% content_for :page_title do %>
-  <%= Spree.t(:new_pricing_tier) %>
+  <%= link_to 'Pricing tiers', spree.admin_supplier_pricing_tiers_path(@supplier) %> / <%= Spree.t(:new_pricing_tier) %>
 <% end %>
 
 <div>

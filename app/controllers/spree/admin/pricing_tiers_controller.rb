@@ -3,6 +3,7 @@ module Spree
     class PricingTiersController < Spree::Admin::BaseController
        before_action :set_supplier
        before_action :set_pricing_tier, only: [:edit, :show, :destroy, :update]
+       before_action :set_associated_params, only: [:create, :update]
 
       def index
         @pricing_tiers = @supplier.pricing_tiers.all
@@ -40,6 +41,12 @@ module Spree
 
       private
 
+      def set_associated_params
+        if params[:pricing_tier][:user_ids].present?
+          params[:pricing_tier][:user_ids] = params[:pricing_tier][:user_ids].split(',')
+        end
+      end
+
       def set_supplier
         @supplier = Spree::Supplier.find_by(id: params[:supplier_id])
       end
@@ -49,7 +56,7 @@ module Spree
       end
 
       def pricing_tier_params
-         params.require(:pricing_tier).permit(:name)
+         params.require(:pricing_tier).permit!
       end
     end
   end
