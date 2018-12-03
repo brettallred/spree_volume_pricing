@@ -14,6 +14,7 @@
     <thead>
       <tr data-hook="pricing_tiers_header">
         <th><%= Spree.t(:name) %></th>
+        <th><%= Spree.t(:available_to_all_users) %></th>
         <th class="actions"></th>
       </tr>
     </thead>
@@ -21,9 +22,10 @@
       <% @pricing_tiers.each do |pricing_tier| %>
         <tr id="<%= spree_dom_id pricing_tier %>" data-hook="pricing_tiers_row">
           <td><%= pricing_tier.name %></td>
+          <td><%= pricing_tier.available_to_all_users ? 'Yes': 'No' %></td>
           <td class="actions actions-2 text-right">
             <%= link_to_with_icon('edit', Spree.t(:edit),  edit_admin_supplier_pricing_tier_path(@supplier, pricing_tier), class: 'btn btn-primary btn-sm', no_text: true, data: { action: 'edit' })%>
-            <%= link_to_with_icon('show', Spree.t(:show), admin_supplier_pricing_tier_path(@supplier, pricing_tier), class: 'btn btn-primary btn-sm', no_text: true, data: { action: 'show' })%>
+            <%#= link_to_with_icon('show', Spree.t(:show), admin_supplier_pricing_tier_path(@supplier, pricing_tier), class: 'btn btn-primary btn-sm', no_text: true, data: { action: 'show' })%>
             <%= link_to_with_icon('delete', Spree.t(:remove), admin_supplier_pricing_tier_path(@supplier, pricing_tier), method: :delete, class: 'icon_link btn btn-danger btn-sm', data: { action: :remove, confirm: Spree.t(:are_you_sure) }, no_text: true) %>
           </td>
         </tr>

@@ -13,4 +13,12 @@
       <%= f.hidden_field :user_ids, value: @pricing_tier.user_ids.join(',') %>
     <% end %>
   </div>
+
+  <div class="col-xs-12 col-md-12" data-hook="admin_pricing_tier_form">
+    <%= f.field_container :available_to_all_users, class: ['form-group'] do %>
+      <%= f.label :available_to_all_users, Spree.t(:available_to_all_users) %>
+      <%= f.error_message_on :available_to_all_users %>
+      <%= f.check_box :available_to_all_users, class: 'form-control' %>
+    <% end %>
+  </div>
 </div>

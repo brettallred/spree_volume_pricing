@@ -7,8 +7,8 @@ Spree::Variant.class_eval do
       volume_price[:amount].blank? && volume_price[:range].blank?
     }
 
-  def user_prices(user) 
-    volume_prices.where(user_id: [nil, user.id])
+  def user_prices(user)
+    volume_prices.joins(pricing_tier: [:users]).where("spree_pricing_tiers.available_to_all_users = ? OR spree_users.id = ?", true, user.id).distinct
   end
 
   def join_volume_prices(user = nil)

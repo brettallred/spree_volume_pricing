@@ -6,7 +6,7 @@ module Spree
        before_action :set_associated_params, only: [:create, :update]
 
       def index
-        @pricing_tiers = @supplier.pricing_tiers.all
+        @pricing_tiers = @supplier.pricing_tiers.all.order(:created_at)
       end
 
       def new
