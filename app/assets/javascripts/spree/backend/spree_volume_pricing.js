@@ -58,4 +58,32 @@ $(document).ready(function () {
       formatSelection: formatUser
     });
   }
+
+  $(document).on('change', '.supplier_select', function(e) {
+    var supplier_id = e.currentTarget.value
+    window._this = this;
+    var url = "/shop/admin/suppliers/"+supplier_id+"/pricing_tiers"
+    $.ajax({
+      type: "GET",
+      dataType: "json",
+      url: url.toString(),
+      data: {
+        token: Spree.api_key
+      },
+        success: function(response) {
+        var $el = $(_this).closest('tr').find('select.pricing_tier_select')
+        $el.empty(); // remove old options
+        $.each(response, function(index, option) {
+          $el.append($("<option></option>")
+             .attr("value", option['value']).text(option['text']));
+        });
+        $('select.select2').select2({
+          allowClear: true,
+          dropdownAutoWidth: true
+        });
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+      }
+    });
+  });
 });

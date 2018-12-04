@@ -7,6 +7,10 @@ module Spree
 
       def index
         @pricing_tiers = @supplier.pricing_tiers.all.order(:created_at)
+        respond_to do |format|
+          format.html  # index.html.erb
+          format.json  { render :json => @supplier.pricing_tiers.map{|x| { value: x.id, text: x.name }} }
+        end
       end
 
       def new
