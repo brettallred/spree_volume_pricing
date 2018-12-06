@@ -56,7 +56,7 @@ module Spree
       end
 
       def set_pricing_tier
-         @pricing_tier = @supplier.pricing_tiers.find_by(id: params[:id])
+        @pricing_tier = @supplier.pricing_tiers.find_by(id: params[:id])
       end
 
       def pricing_tier_params
