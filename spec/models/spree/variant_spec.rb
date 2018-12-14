@@ -6,7 +6,8 @@ RSpec.describe Spree::Variant, type: :model do
     context 'discount_type = price' do
       before :each do
         @variant = create :variant, price: 10
-        @variant.volume_prices.create! amount: 9, discount_type: 'price', range: '(10+)'
+        @volume_price = create(:volume_price, amount: 9, discount_type: 'price', range: '(10+)')
+        @variant.volume_prices << @volume_price
         @role = create(:role)
         @user = create(:user)
       end
@@ -40,7 +41,8 @@ RSpec.describe Spree::Variant, type: :model do
 
       it 'uses the volume price when it does match from a volume price model' do
         @variant.volume_price_models << create(:volume_price_model)
-        @variant.volume_price_models.first.volume_prices.create!(amount: 5, discount_type: 'price', range: '(5+)')
+        volume_price = create(:volume_price, amount: 5, discount_type: 'price', range: '(5+)')
+        @variant.volume_price_models.first.volume_prices << volume_price
         expect(@variant.volume_price(6).to_f).to be(5.00)
       end
 
@@ -102,7 +104,8 @@ RSpec.describe Spree::Variant, type: :model do
     context 'discount_type = dollar' do
       before :each do
         @variant = create :variant, price: 10
-        @variant.volume_prices.create! amount: 1, discount_type: 'dollar', range: '(10+)'
+        @volume_price = create(:volume_price, amount: 1, discount_type: 'dollar', range: '(10+)')
+        @variant.volume_prices << @volume_price
         @role = create(:role)
         @user = create(:user)
       end
@@ -136,7 +139,8 @@ RSpec.describe Spree::Variant, type: :model do
 
       it 'uses the volume price when it does match from a volume price model' do
         @variant.volume_price_models << create(:volume_price_model)
-        @variant.volume_price_models.first.volume_prices.create!(amount: 5, discount_type: 'dollar', range: '(5+)')
+        volume_price = create(:volume_price, amount: 5, discount_type: 'dollar', range: '(5+)')
+        @variant.volume_price_models.first.volume_prices << volume_price 
         expect(@variant.volume_price(6).to_f).to be(5.00)
       end
 
@@ -198,7 +202,8 @@ RSpec.describe Spree::Variant, type: :model do
     context 'discount_type = percent' do
       before :each do
         @variant = create :variant, price: 10
-        @variant.volume_prices.create! amount: 0.1, discount_type: 'percent', range: '(10+)'
+        @volume_price = create(:volume_price, amount: 0.1, discount_type: 'percent', range: '(10+)')
+        @variant.volume_prices << @volume_price
         @role = create(:role)
         @user = create(:user)
       end
@@ -233,7 +238,8 @@ RSpec.describe Spree::Variant, type: :model do
       it 'gives percent of earning without roles' do
         expect(@variant.volume_price_earning_percent(10)).to be(10)
         @variant_five = create :variant, price: 10
-        @variant_five.volume_prices.create! amount: 0.5, discount_type: 'percent', range: '(1+)'
+        volume_price = create(:volume_price, amount: 0.5, discount_type: 'percent', range: '(1+)')
+        @variant_five.volume_prices << volume_price
         expect(@variant_five.volume_price_earning_percent(1)).to be(50)
       end
 
@@ -242,7 +248,8 @@ RSpec.describe Spree::Variant, type: :model do
         Spree::Config.volume_pricing_role = @role.name
         expect(@variant.volume_price_earning_percent(10)).to be(10)
         @variant_five = create :variant, price: 10
-        @variant_five.volume_prices.create! amount: 0.5, discount_type: 'percent', range: '(1+)'
+        volume_price = create(:volume_price, amount: 0.5, discount_type: 'percent', range: '(1+)')
+        @variant_five.volume_prices << volume_price
         @variant_five.volume_prices.first.update(role_id: @role.id)
         expect(@variant_five.volume_price_earning_percent(1, @user)).to be(50)
       end
@@ -266,7 +273,8 @@ RSpec.describe Spree::Variant, type: :model do
       it 'gives amount earning without roles' do
         expect(@variant.volume_price_earning_amount(10)).to eq(1)
         @variant_five = create :variant, price: 10
-        @variant_five.volume_prices.create! amount: 0.5, discount_type: 'percent', range: '(1+)'
+        volume_price = create(:volume_price, amount: 0.5, discount_type: 'percent', range: '(1+)')
+        @variant_five.volume_prices << volume_price
         expect(@variant_five.volume_price_earning_amount(1)).to eq(5)
       end
 
@@ -275,14 +283,16 @@ RSpec.describe Spree::Variant, type: :model do
         Spree::Config.volume_pricing_role = @role.name
         expect(@variant.volume_price_earning_amount(10)).to eq(1)
         @variant_five = create :variant, price: 10
-        @variant_five.volume_prices.create! amount: 0.5, discount_type: 'percent', range: '(1+)'
+        volume_price = create(:volume_price, amount: 0.5, discount_type: 'percent', range: '(1+)')
+        @variant_five.volume_prices << volume_price
         @variant_five.volume_prices.first.update(role_id: @role.id)
         expect(@variant_five.volume_price_earning_amount(1, @user)).to eq(5)
       end
 
       it 'uses the volume price when it does match from a volume price model' do
         @variant.volume_price_models << create(:volume_price_model)
-        @variant.volume_price_models.first.volume_prices.create!(amount: 0.5, discount_type: 'percent', range: '(5+)')
+        volume_price = create(:volume_price, amount: 0.5, discount_type: 'percent', range: '(5+)')
+        @variant.volume_price_models.first.volume_prices << volume_price 
         expect(@variant.volume_price(6).to_f).to be(5.00)
       end
 

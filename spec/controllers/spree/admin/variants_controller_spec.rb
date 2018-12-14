@@ -4,6 +4,7 @@ RSpec.describe Spree::Admin::VariantsController, type: :controller do
   context 'PUT #update' do
     it 'creates a volume price' do
       variant = create :variant
+      pricing_tier = create :pricing_tier
 
       expect do
         spree_put :update,
@@ -17,7 +18,9 @@ RSpec.describe Spree::Admin::VariantsController, type: :controller do
                         'range' => '5..10',
                         'amount' => '90',
                         'position' => '1',
-                        '_destroy' => 'false'
+                        '_destroy' => 'false',
+                        'supplier_id' => pricing_tier.supplier.id,
+                        'pricing_tier_id' => pricing_tier.id
                       }
                     }
                   }

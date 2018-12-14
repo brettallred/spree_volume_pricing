@@ -5,9 +5,10 @@ RSpec.describe Spree::VolumePrice, type: :model do
   it { is_expected.to validate_presence_of(:discount_type) }
   it { is_expected.to validate_inclusion_of(:discount_type).in_array(%w(price dollar percent)) }
   it { is_expected.to validate_presence_of(:amount) }
+  it { is_expected.to belong_to(:supplier).touch(true) }
 
   before do
-    @volume_price = Spree::VolumePrice.new(variant: Spree::Variant.new, amount: 10, discount_type: 'price')
+    @volume_price = Spree::VolumePrice.new(variant: Spree::Variant.new, amount: 10, discount_type: 'price', supplier: Spree::Supplier.new, pricing_tier: Spree::PricingTier.new)
   end
 
   ['1..2', '(1..2)'].each do |range|
