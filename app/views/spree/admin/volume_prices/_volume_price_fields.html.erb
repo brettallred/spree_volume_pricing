@@ -5,7 +5,7 @@
   </td>
   <td>
     <%= error_message_on(f.object, :pricing_tier_id) %>
-    <%= f.collection_select(:pricing_tier_id, f.object&.supplier&.pricing_tiers, :id, :name, { include_blank: Spree.t('match_choices.none') }, { class: 'select2 pricing_tier_select' }) %>
+    <%= f.collection_select(:pricing_tier_id, f.object&.supplier&.pricing_tiers || [], :id, :name, { include_blank: Spree.t('match_choices.none') }, { class: 'select2 pricing_tier_select' }) %>
   </td>
 
   <td>
