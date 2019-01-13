@@ -13,7 +13,7 @@ class Spree::Supplier < ActiveRecord::Base
 
   def create_stock_location
     if stock_location.nil?
-      self.stock_location = Spree::StockLocation.new(name: name)
+      self.stock_location = Spree::StockLocation.new(name: name, propagate_all_variants: false)
     end
   end
 
