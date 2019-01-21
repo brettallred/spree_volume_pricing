@@ -45,6 +45,7 @@ $(document).ready(function () {
             q: {
               email_cont: term
             },
+            supplier_id: $('#pricing_tier_supplier_credential_attributes_supplier_id').val(),
             token: Spree.api_key
           };
         },
