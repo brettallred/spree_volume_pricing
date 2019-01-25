@@ -87,4 +87,34 @@ $(document).ready(function () {
       }
     });
   });
+
+  // Added custom function to remove volume price row when delete action is performed
+  $('.spree_remove_volume_price').click( function() {
+    var $el = $(this);
+    $el.prev("input[type=hidden]").val("1");
+    $el.closest(".fields").hide();
+    if ($el.prop("href").substr(-1) == '#') {
+      $el.parents("tr").fadeOut('hide');
+    }else if ($el.prop("href")) {
+      $.ajax({
+        type: 'POST',
+        url: $el.prop("href"),
+        data: {
+          _method: 'delete',
+          authenticity_token: AUTH_TOKEN
+        },
+        success: function(response) {
+          $el.parents("tr").fadeOut('hide', function() {
+            this.nextElementSibling.remove();
+            $(this).remove();
+          });
+        },
+        error: function(response, textStatus, errorThrown) {
+          show_flash('error', response.responseText);
+        }
+
+      })
+    }
+    return false;
+  });
 });
