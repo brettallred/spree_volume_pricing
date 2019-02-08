@@ -10,7 +10,7 @@ Spree::Variant.class_eval do
   def user_prices(user)
     volume_prices.joins('INNER JOIN "spree_pricing_tiers" ON "spree_pricing_tiers"."id" = "spree_volume_prices"."pricing_tier_id"')
                  .joins('LEFT JOIN "spree_pricing_tiers_users" ON "spree_pricing_tiers_users"."pricing_tier_id" = "spree_pricing_tiers"."id" LEFT JOIN "spree_users" ON "spree_users"."id" = "spree_pricing_tiers_users"."user_id"')
-                 .where("spree_pricing_tiers.available_to_all_users = ? OR spree_users.id = ?", true, user.id).distinct.reorder("amount asc")
+                 .where("spree_pricing_tiers.available_to_all_users = ? OR spree_users.id = ?", true, user.id).distinct.reorder("amount desc")
   end
 
   def join_volume_prices(user = nil)
