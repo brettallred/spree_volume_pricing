@@ -9,7 +9,7 @@ Spree::Variant.class_eval do
 
   def user_prices(user)
     volume_prices.joins('INNER JOIN "spree_pricing_tiers" ON "spree_pricing_tiers"."id" = "spree_volume_prices"."pricing_tier_id"')
-                 .joins('LEFT JOIN "spree_pricing_tiers_users" ON "spree_pricing_tiers_users"."pricing_tier_id" = "spree_pricing_tiers"."id" LEFT JOIN "spree_users" ON "spree_users"."id" = "spree_pricing_tiers_users"."user_id" AND "spree_users"."deleted_at" IS NULL ')
+                 .joins('LEFT JOIN "spree_pricing_tiers_users" ON "spree_pricing_tiers_users"."pricing_tier_id" = "spree_pricing_tiers"."id" LEFT JOIN "spree_users" ON "spree_users"."id" = "spree_pricing_tiers_users"."user_id"')
                  .where("spree_pricing_tiers.available_to_all_users = ? OR spree_users.id = ?", true, user.id).distinct.reorder("amount asc")
   end
 
@@ -31,6 +31,20 @@ Spree::Variant.class_eval do
           .and(table[:role_id].eq(nil))
         ).order(position: :asc)
     end
+  end
+
+  def volume_price_and_amount(quantity, user)
+    volume_prices = user_prices user
+    if volume_prices.present?
+      volume_prices.each do |volume_price|
+        if volume_price.include?(quantity)
+          amount = send :compute_volume_price, volume_price
+          return amount, volume_price
+        end
+      end
+    end
+
+    return price, nil
   end
 
   # calculates the price based on quantity

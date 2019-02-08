@@ -16,14 +16,11 @@ RSpec.describe Spree::Order, type: :model do
       expect(@order.line_items.first.price).to eq(10)
     end
 
-    it 'uses the volume price if volume price is assigned to line item' do
-      options = { volume_price_id: @volume_price1.id }
-      @order.contents.add(@variant_with_prices, 7, options)
+    it 'should use volume price if quantity matches' do
+      @order.contents.add(@variant_with_prices, 4)
       expect(@order.line_items.first.price).to eq(9)
-      @line_item = @order.line_items.first
-      @line_item.update_attributes(volume_price_id: nil)
-      @line_item.update_price
-      expect(@order.line_items.first.price).to eq(10)
+      @order.contents.add(@variant_with_prices, 3)
+      expect(@order.line_items.first.price).to eq(8)
     end
 
     xit 'uses the variant price if the quantity fails to satisfy any of the volume price ranges' do
@@ -36,13 +33,9 @@ RSpec.describe Spree::Order, type: :model do
       expect(@order.line_items.first.price).to eq(8)
     end
 
-    it 'uses the master variant volume price in case variant has no volume price if config is true' do
-      Spree::Config.use_master_variant_volume_pricing = true
-      @master = @variant.product.master
-      options = { volume_price_id: @volume_price1.id }
-      @master.volume_prices << @volume_price1
-      @order.contents.add(@variant, 5, options)
-      expect(@order.line_items.first.price).to eq(9)
+    it 'uses the product price in case variant has no volume price' do
+      @order.contents.add(@variant, 5)
+      expect(@order.line_items.first.price).to eq(10)
     end
 
     it 'doesnt use the master variant volume price in case variant has no volume price if config is false' do
