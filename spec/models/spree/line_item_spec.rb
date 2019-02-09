@@ -6,7 +6,7 @@ RSpec.describe Spree::LineItem, type: :model do
     @variant.volume_prices << @volume_price
   end
 
-  it 'should updates the price w.r.t to qunatity' do
+  it 'should updates the price with respect to quantity' do
     @order.contents.add(@variant, 1)
     @line_item = @order.line_items.first
     expect(@line_item.price.to_f).to be(10.00)
