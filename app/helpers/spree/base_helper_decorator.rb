@@ -16,4 +16,10 @@ Spree::BaseHelper.class_eval do
       currency: Spree::Config[:currency]
     ).to_html
   end
+
+  # renders hidden field and link to remove volume price using nested_attributes
+  def link_to_icon_remove_volume_price(f)
+    url = f.object.persisted? ? [:admin, f.object] : '#'
+    link_to_with_icon('delete', '', url, class: 'spree_remove_volume_price btn btn-sm btn-danger', data: { action: 'remove' }, title: Spree.t(:remove)) + f.hidden_field(:_destroy)
+  end
 end
