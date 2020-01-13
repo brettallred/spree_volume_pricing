@@ -12,9 +12,3 @@ Deface::Override.new(
   partial: 'spree/admin/variants/edit_fields'
 )
 
-Deface::Override.new(
-  virtual_path:  'spree/layouts/admin',
-  name:          'add_supplier_main_menu_tabs',
-  insert_bottom: '#main-sidebar',
-  partial: 'spree/admin/shared/suppliers_tab'
-)
