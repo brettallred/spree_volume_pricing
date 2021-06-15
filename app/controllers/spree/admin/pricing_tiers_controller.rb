@@ -28,12 +28,13 @@ module Spree
       end
 
       def update
-       if @pricing_tier.update_attributes(pricing_tier_params)
-         flash[:success] = Spree.t(:successfully_updated, resource: Spree.t(:pricing_tier))
-         redirect_to admin_supplier_pricing_tiers_path(@supplier)
-       else
-         render :edit
-       end
+        params[:pricing_tier][:user_ids] = params[:pricing_tier][:user_ids].flatten
+        if @pricing_tier.update(pricing_tier_params)
+          flash[:success] = Spree.t(:successfully_updated, resource: Spree.t(:pricing_tier))
+          redirect_to admin_supplier_pricing_tiers_path(@supplier)
+        else
+          render :edit
+        end
       end
 
       def destroy

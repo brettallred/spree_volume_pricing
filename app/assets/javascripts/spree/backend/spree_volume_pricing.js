@@ -15,50 +15,48 @@ $(function () {
 
 });
 
-$(document).ready(function () {
-  'use strict';
+$.fn.userAutocomplete = function () {
+  'use strict'
 
-  function formatUser(user) {
-    return Select2.util.escapeMarkup(user.email);
-  }
-
-  if ($('#pricing_tier_user_ids').length > 0) {
-    $('#pricing_tier_user_ids').select2({
+  if (this.length > 0) {
+    this.select2({
       placeholder: 'Choose an user',
-      minimumInputLength: 1,
+      minimumInputLength: 2,
       multiple: true,
-      initSelection: function (element, callback) {
-        var url = Spree.url(Spree.routes.users_api, {
-          ids: element.val(),
-          token: Spree.api_key
-        });
-        return $.getJSON(url, null, function (data) {
-          return callback(data.users);
-        });
-      },
       ajax: {
         url: Spree.routes.users_api,
-        quietMillis: 200,
         datatype: 'json',
-        data: function (term) {
-          return {
+        data: function (params) {
+          var query = {
             q: {
-              email_cont: term
+              email_cont: params.term
             },
             supplier_id: $('#pricing_tier_supplier_credential_attributes_supplier_id').val(),
             token: Spree.api_key
-          };
+          }
+
+          return query
         },
-        results: function (data) {
+        processResults: function (data) {
           return {
             results: data.users
-          };
+          }
         }
       },
-      formatResult: formatUser,
-      formatSelection: formatUser
-    });
+      templateResult: function (data) {
+        return data.email
+      },
+      templateSelection: function (data) {
+        return data.email
+      }
+    })
   }
+}
+
+$(document).ready(function () {
+  'use strict';
+
+  $('#pricing_tier_user_ids').userAutocomplete()
 
   $(document).on('change', '.supplier_select', function(e) {
     var supplier_id = e.currentTarget.value
