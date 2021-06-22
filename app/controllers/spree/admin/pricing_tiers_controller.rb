@@ -18,6 +18,7 @@ module Spree
       end
 
       def create
+       params[:pricing_tier][:user_ids] = params[:pricing_tier][:user_ids].flatten
        @pricing_tier = @supplier.pricing_tiers.build(pricing_tier_params)
        if @pricing_tier.save
          flash[:success] = flash_message_for(@pricing_tier, :successfully_created)
