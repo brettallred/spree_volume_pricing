@@ -1,11 +1,11 @@
 <tr class="volume_price fields">
   <td>
     <%= error_message_on(f.object, :supplier_id) %>
-    <%= f.collection_select(:supplier_id, Spree::Supplier.all, :id, :name, { include_blank: Spree.t('match_choices.none') }, { class: 'select2 supplier_select' }) %>
+    <%= f.collection_select(:supplier_id, Spree::Supplier.all, :id, :name, { include_blank: Spree.t('match_choices.none') }, { class: 'form-control supplier_select' }) %>
   </td>
   <td>
     <%= error_message_on(f.object, :pricing_tier_id) %>
-    <%= f.collection_select(:pricing_tier_id, f.object&.supplier&.pricing_tiers || [], :id, :name, { include_blank: Spree.t('match_choices.none') }, { class: 'select2 pricing_tier_select' }) %>
+    <%= f.collection_select(:pricing_tier_id, f.object&.supplier&.pricing_tiers || [], :id, :name, { include_blank: Spree.t('match_choices.none') }, { class: 'form-control pricing_tier_select' }) %>
   </td>
 
   <td>
@@ -15,7 +15,7 @@
         ["#{Spree.t(:total_price)}", 'price'],
         ["#{Spree.t(:percent_discount)}", 'percent'],
         ["#{Spree.t(:price_discount)}", 'dollar']
-      ], { include_blank: true }, class: 'select2' %>
+      ], { include_blank: true }, class: 'form-control' %>
   </td>
   <td>
     <%= error_message_on(f.object, :range) %>
@@ -31,7 +31,7 @@
   </td>
   <td>
     <%= error_message_on(f.object, :role_id) %>
-    <%= f.collection_select(:role_id, Spree::Role.all, :id, :name, { include_blank: Spree.t('match_choices.none') }, { class: 'select2' }) %>
+    <%= f.collection_select(:role_id, Spree::Role.all, :id, :name, { include_blank: Spree.t('match_choices.none') }, { class: 'form-control' }) %>
   </td>
   <td class="actions">
     <%= link_to_icon_remove_volume_price f %>
