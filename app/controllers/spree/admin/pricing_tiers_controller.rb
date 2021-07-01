@@ -18,6 +18,7 @@ module Spree
       end
 
       def create
+       params[:pricing_tier][:user_ids] = params[:pricing_tier][:user_ids].flatten
        @pricing_tier = @supplier.pricing_tiers.build(pricing_tier_params)
        if @pricing_tier.save
          flash[:success] = flash_message_for(@pricing_tier, :successfully_created)
@@ -28,12 +29,13 @@ module Spree
       end
 
       def update
-       if @pricing_tier.update_attributes(pricing_tier_params)
-         flash[:success] = Spree.t(:successfully_updated, resource: Spree.t(:pricing_tier))
-         redirect_to admin_supplier_pricing_tiers_path(@supplier)
-       else
-         render :edit
-       end
+        params[:pricing_tier][:user_ids] = params[:pricing_tier][:user_ids].flatten
+        if @pricing_tier.update(pricing_tier_params)
+          flash[:success] = Spree.t(:successfully_updated, resource: Spree.t(:pricing_tier))
+          redirect_to admin_supplier_pricing_tiers_path(@supplier)
+        else
+          render :edit
+        end
       end
 
       def destroy

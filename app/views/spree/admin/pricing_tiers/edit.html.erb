@@ -4,14 +4,14 @@
   <%= link_to 'Pricing tiers', spree.admin_supplier_pricing_tiers_path(@supplier) %> / <%= @pricing_tier.name %>
 <% end %>
 
-<div data-hook="admin_user_edit_general_settings" class="panel panel-default">
-  <div class="panel-heading">
-    <h1 class="panel-title">
+<div data-hook="admin_user_edit_general_settings" class="card">
+  <div class="card-header">
+    <h6 class="card-title">
       <%= Spree.t(:general_details) %>
-    </h1>
+    </h6>
   </div>
 
-  <div class="panel-body">
+  <div class="card-body">
     <div data-hook="admin_user_edit_form_header">
       <%= render partial: 'spree/admin/shared/error_messages', locals: { target: @pricing_tier } %>
     </div>

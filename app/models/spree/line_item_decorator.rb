@@ -14,10 +14,9 @@ Spree::LineItem.class_eval do
     return unless variant
 
     if changed? && changes.keys.include?('quantity')
-      if volume_price.present?
-        self.price = volume_price.calculated_price 
-        return
-      end
+      amount, volume_price = self.variant.volume_price_and_amount(self.quantity, self.order.user)
+      self.volume_price_id = volume_price&.id
+      self.price = amount and return
     end
 
     self.price = variant.price if price.nil?
@@ -26,10 +25,8 @@ Spree::LineItem.class_eval do
   # Used this pattern for backward compatibility
   old_update_price = instance_method(:update_price)
   define_method(:update_price) do
-    if volume_price.nil?
-      old_update_price.bind(self).call
-    else
-      self.price = volume_price.calculated_price 
-    end
+    amount, volume_price = self.variant.volume_price_and_amount(self.quantity, self.order.user)
+    self.price = amount
+    self.volume_price_id = volume_price&.id
   end
 end

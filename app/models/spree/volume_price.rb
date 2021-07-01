@@ -19,12 +19,12 @@ class Spree::VolumePrice < ActiveRecord::Base
             presence: true,
             inclusion: {
               in: %w(price dollar percent),
-              message: I18n.t(:'activerecord.errors.messages.is_not_a_valid_volume_price_type', value: self)
+              message: 'is not valid volume price type'
             }
   validates :range,
             format: {
               with: /\(?[0-9]+(?:\.{2,3}[0-9]+|\+\)?)/,
-              message: I18n.t(:'activerecord.errors.messages.must_be_in_format')
+              message: 'must be in one of the following formats: (a..b), (a...b), (a+)'
             }
 
   OPEN_ENDED = /\(?[0-9]+\+\)?/
