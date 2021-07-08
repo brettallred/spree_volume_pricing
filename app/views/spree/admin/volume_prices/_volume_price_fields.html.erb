@@ -1,15 +1,16 @@
 <tr class="volume_price fields">
+  <td colspan="8" class="text-danger">
+    <%= render 'spree/shared/error_messages', target: f.object %>
+  </td>
+</tr>
+<tr class="volume_price fields">
   <td>
-    <%= error_message_on(f.object, :supplier_id) %>
     <%= f.collection_select(:supplier_id, Spree::Supplier.all, :id, :name, { include_blank: Spree.t('match_choices.none') }, { class: 'form-control supplier_select' }) %>
   </td>
   <td>
-    <%= error_message_on(f.object, :pricing_tier_id) %>
     <%= f.collection_select(:pricing_tier_id, f.object&.supplier&.pricing_tiers || [], :id, :name, { include_blank: Spree.t('match_choices.none') }, { class: 'form-control pricing_tier_select' }) %>
   </td>
-
   <td>
-    <%= error_message_on(f.object, :discount_type) %>
     <%= f.select :discount_type, [
         ["#{Spree.t(:none)}", 'none'],
         ["#{Spree.t(:total_price)}", 'price'],
@@ -18,19 +19,15 @@
       ], { include_blank: true }, class: 'form-control' %>
   </td>
   <td>
-    <%= error_message_on(f.object, :range) %>
     <%= f.text_field :range, size: 10, class: 'form-control' %>
   </td>
   <td>
-    <%= error_message_on(f.object, :amount) %>
     <%= f.text_field :amount, size: 10, class: 'form-control' %>
   </td>
   <td>
-    <%= error_message_on(f.object, :position) %>
     <%= f.text_field :position, size: 3, class: 'form-control' %>
   </td>
   <td>
-    <%= error_message_on(f.object, :role_id) %>
     <%= f.collection_select(:role_id, Spree::Role.all, :id, :name, { include_blank: Spree.t('match_choices.none') }, { class: 'form-control' }) %>
   </td>
   <td class="actions">
