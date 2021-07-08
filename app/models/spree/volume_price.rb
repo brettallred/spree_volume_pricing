@@ -24,7 +24,7 @@ class Spree::VolumePrice < ActiveRecord::Base
   validates :range,
             format: {
               with: /\(?[0-9]+(?:\.{2,3}[0-9]+|\+\)?)/,
-              message: 'must be in one of the following formats: (a..b), (a...b), (a+)'
+              message: 'must be in one of the following formats: (a..b), (a...b), (a+). Here are following examples: 1..3 , 1...5 , 5+'
             }
 
   OPEN_ENDED = /\(?[0-9]+\+\)?/
